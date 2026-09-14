@@ -1,0 +1,51 @@
+pluginManagement {
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        google {
+            url 'https://maven.aliyun.com/repository/google'
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral {
+            url 'https://maven.aliyun.com/repository/central'
+        }
+        gradlePluginPortal()
+        maven { url 'https://developer.huawei.com/repo/' }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            url 'https://hjtcode-cn-hangzhou.devops.aliyuncs.com/packages/api/protocol/maven/repo-pxsqm'
+            credentials {
+                def mavenCredentials = new Properties()
+                def mavenCredentialsFile = new File(settingsDir, "local.maven.properties")
+                if (mavenCredentialsFile.exists()) {
+                    mavenCredentialsFile.withInputStream { mavenCredentials.load(it) }
+                }
+                username mavenCredentials.getProperty("aliyun.maven.username", "")
+                password mavenCredentials.getProperty("aliyun.maven.password", "")
+            }
+        }
+        google {
+            url 'https://maven.aliyun.com/repository/google'
+        }
+        mavenCentral {
+            url 'https://maven.aliyun.com/repository/central'
+        }
+        maven { url 'https://developer.huawei.com/repo/' }
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+rootProject.name = "linkeasyTest"
+include ':app'

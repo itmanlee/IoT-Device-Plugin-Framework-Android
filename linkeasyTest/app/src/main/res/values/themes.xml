@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Mytheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- 覆盖库默认 @color/base_blue；不写此项则仍用库内默认 -->
+        <item name="primaryThemeColor">@color/host_primary_theme_color</item>
+        <!-- 覆盖库默认 logo -->
+        <item name="logo">@mipmap/ic_launcher_round</item>
+    </style>
+
+    <style name="Theme.LinkeasyAar" parent="Theme.Mytheme" />
+</resources>
