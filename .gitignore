@@ -1,0 +1,59 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Local / machine-specific
+local.properties
+local.maven.properties
+
+# Android Studio / IntelliJ
+*.iml
+.idea/
+.navigation/
+captures/
+.externalNativeBuild/
+.cxx/
+.kotlin/
+*.hprof
+
+# Built artifacts
+*.apk
+*.ap_
+*.aab
+*.aar
+*.dex
+*.class
+
+# Signing / secrets
+*.jks
+*.keystore
+*.p12
+keystore.properties
+*.key
+*.pem
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs and temp
+*.log
+*.swp
+*~
+bin/
+gen/
+out/
+obj/
+*.o
+*.obj
+
+# NDK compile output (keep src/main/jniLibs)
+**/libs/*.so
+**/libs/**/*.so
+!**/src/main/jniLibs/**
+!**/src/main/jniLibs/**/*.so
+CMakeCache.txt
+cmake-build-*/
+compile_commands.json
