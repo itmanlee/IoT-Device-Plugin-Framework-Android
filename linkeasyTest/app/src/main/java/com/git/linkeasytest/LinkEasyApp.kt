@@ -25,7 +25,7 @@ class LinkEasyApp : Application() {
             MyConfig(
                 appName = "linkeasy",
                 applicationId = packageName,
-                appVendor = "linkeasy",
+                appVendor = "LINKEASY",
                 url = ServiceUrl(baseUrl = "http://ai-cn.yeelinkvision.com"),
                 primaryThemeColor = 0xFFFF0000.toInt()
             )
@@ -38,6 +38,10 @@ class LinkEasyApp : Application() {
 
             override fun addDeviceSuccess(sn: String) {
                 Log.i("AddDevice", "host received added sn=$sn")
+            }
+
+            override fun addDeviceSuccessForShare() {
+                Log.i("AddDevice", "addDeviceSuccessForShare")
             }
         })
     }
