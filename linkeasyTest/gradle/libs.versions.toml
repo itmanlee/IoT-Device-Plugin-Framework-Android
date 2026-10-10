@@ -8,7 +8,8 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
 composeBom = "2024.09.00"
-linkeasySdk="1.0.1"
+linkeasySdk="1.0.2"
+gsonVersion="2.8.9"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -26,6 +27,9 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 linkeasy-sdk={group = "io.enz.linkeasy", name = "linkeasysdk", version.ref = "linkeasySdk"}
 linkeasy-featureAdddevice={group = "io.enz.linkeasy", name = "linkeasyFeatureAdddevice", version.ref = "linkeasySdk"}
+linkeasy-featurePreview={group = "io.enz.linkeasy", name = "linkeasyFeaturePreview", version.ref = "linkeasySdk"}
+gson-goolge={ group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

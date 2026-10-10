@@ -6,6 +6,8 @@ import com.git.linkeasyconfig.config.MyConfig
 import com.git.linkeasyconfig.config.ServiceUrl
 import com.git.linkeasyfeatureadddevice.AddDeviceApi
 import com.git.linkeasyfeatureadddevice.AddDeviceHostCallback
+import com.git.linkeasyfeaturepreview.PreviewApi
+import com.git.linkeasyrtm.RtmModule
 import com.git.linkeasysdk.LinkEasySdk
 
 /**
@@ -13,6 +15,7 @@ import com.git.linkeasysdk.LinkEasySdk
  * 需在 AndroidManifest 的 application 节点中声明 android:name=".LinkEasyApp"。
  */
 class LinkEasyApp : Application() {
+    val callback = SdkCallBack()
     override fun onCreate() {
         super.onCreate()
         // 初始化 SDK：应用标识、服务地址、主题色等由宿主传入。
@@ -27,22 +30,15 @@ class LinkEasyApp : Application() {
                 applicationId = packageName,
                 appVendor = "LINKEASY",
                 url = ServiceUrl(baseUrl = "http://ai-cn.yeelinkvision.com"),
-                primaryThemeColor = 0xFFFF0000.toInt()
+                primaryThemeColor = 0xFFFF0000.toInt(),
+                appRtcId = "e5948fec52584be4a29543a66c458bd2"
             )
         )
-        // 宿主侧校验与结果通知：插件通过这些回调询问设备是否已添加、SN 是否合法，以及添加成功
-        AddDeviceApi.setHostCallback(object : AddDeviceHostCallback {
-            override fun isDeviceAlreadyAdded(sn: String): Boolean = false
-
-            override fun isSerialNumberValid(sn: String): Boolean = true
-
-            override fun addDeviceSuccess(sn: String) {
-                Log.i("AddDevice", "host received added sn=$sn")
-            }
-
-            override fun addDeviceSuccessForShare() {
-                Log.i("AddDevice", "addDeviceSuccessForShare")
-            }
-        })
+        //初始化预览模块
+        PreviewApi.init(applicationContext)
+        // 宿主侧添加相关回调接口
+        AddDeviceApi.setHostCallback(callback)
+        PreviewApi.setHostCallback(callback)
+        RtmModule.setHostCallback(callback)
     }
 }

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">linkeasyTest</string>
     <string name="add_device">添加设备</string>
+    <string name="start_preview">开启预览</string>
 </resources>
