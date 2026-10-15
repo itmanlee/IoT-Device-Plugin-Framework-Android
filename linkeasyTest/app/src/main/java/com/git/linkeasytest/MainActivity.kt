@@ -21,12 +21,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.git.linkeasycommon.hostBean.HostAlarmInfo
 import com.git.linkeasycommon.hostBean.HostPreviewInfo
+import com.git.linkeasycommon.hostBean.HostShareDeviceInfo
 import com.git.linkeasycommon.hostBean.HostUserinfo
 import com.git.linkeasyfeatureadddevice.AddDeviceApi
 import com.git.linkeasyfeatureadddevice.AddDeviceContract
+import com.git.linkeasyfeaturealarm.AlarmApi
+import com.git.linkeasyfeaturealarm.AlarmContract
 import com.git.linkeasyfeaturepreview.PreviewApi
 import com.git.linkeasyfeaturepreview.PreviewContract
+import com.git.linkeasyfeaturesharedevice.ShareDeviceApi
+import com.git.linkeasyfeaturesharedevice.ShareDeviceContract
 import com.git.linkeasyrtc.RtcModule
 import com.git.linkeasyrtm.RtmModule
 import com.git.linkeasytest.ui.theme.LinkeasyTestTheme
@@ -54,6 +60,13 @@ class MainActivity : ComponentActivity() {
      */
     private val previewDeviceLauncher = registerForActivityResult(PreviewContract()) { finishedAfterSuccess ->
         Toast.makeText(this, "PreviewActivity closed", Toast.LENGTH_SHORT).show()
+    }
+
+    private val shareDeviceLauncher = registerForActivityResult(ShareDeviceContract()) { finishedAfterSuccess ->
+        Toast.makeText(this, "ShareDeviceActivity closed", Toast.LENGTH_SHORT).show()
+    }
+    private val alarmContractLauncher = registerForActivityResult(AlarmContract()) { finishedAfterSuccess ->
+        Toast.makeText(this, "AlarmActivity closed", Toast.LENGTH_SHORT).show()
     }
     /**
      * 用于刷新RTC/RTM的token，建议用户登录后调用
@@ -88,9 +101,33 @@ class MainActivity : ComponentActivity() {
                     }
                     Button(onClick = {
                         PreviewApi.start(previewDeviceLauncher,
-                            HostPreviewInfo(10296, "9f1012e59c08df66b471cb4080c6fd01", "03a3000200a96889de71"))
+                            HostPreviewInfo(10296, "9f1012e59c08df66b471cb4080c6fd01", "03a7000200d83e51deef"))
                     }) {
                         Text(text = stringResource(R.string.start_preview))
+                    }
+                    Button(onClick = {
+                        ShareDeviceApi.start(shareDeviceLauncher,
+                            HostShareDeviceInfo(10048, "258f6c1bd3721ba3739b6113cc902b8b", "03eb0002003955462fbe"))
+                    }) {
+                        Text(text = stringResource(R.string.device_share))
+                    }
+                    Button(onClick = {
+                        ShareDeviceApi.start(shareDeviceLauncher,
+                            HostShareDeviceInfo(10296, "9f1012e59c08df66b471cb4080c6fd01", "03a7000200d83e51deef"))
+                    }) {
+                        Text(text = stringResource(R.string.device_share2))
+                    }
+                    Button(onClick = {
+                        AlarmApi.start(alarmContractLauncher,
+                            HostAlarmInfo(10296, "9f1012e59c08df66b471cb4080c6fd01", "03a7000200d83e51deef"))
+                    }) {
+                        Text(text = stringResource(R.string.device_alarm))
+                    }
+                    Button(onClick = {
+                        AlarmApi.start(alarmContractLauncher,
+                            HostAlarmInfo(10296, "9f1012e59c08df66b471cb4080c6fd01", "1398000200edfb724bbf"))
+                    }) {
+                        Text(text = stringResource(R.string.device_alarm2))
                     }
                 }
 

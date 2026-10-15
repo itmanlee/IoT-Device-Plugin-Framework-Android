@@ -8,7 +8,7 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
 composeBom = "2024.09.00"
-linkeasySdk="1.0.2"
+linkeasySdk="1.0.3"
 gsonVersion="2.8.9"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,6 +28,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 linkeasy-sdk={group = "io.enz.linkeasy", name = "linkeasysdk", version.ref = "linkeasySdk"}
 linkeasy-featureAdddevice={group = "io.enz.linkeasy", name = "linkeasyFeatureAdddevice", version.ref = "linkeasySdk"}
 linkeasy-featurePreview={group = "io.enz.linkeasy", name = "linkeasyFeaturePreview", version.ref = "linkeasySdk"}
+linkeasy-featureSharedevice={group = "io.enz.linkeasy", name = "linkeasyFeatureSharedevice", version.ref = "linkeasySdk"}
+linkeasy-featureAlarm={group = "io.enz.linkeasy", name = "linkeasyFeatureAlarm", version.ref = "linkeasySdk"}
 gson-goolge={ group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
 
 [plugins]

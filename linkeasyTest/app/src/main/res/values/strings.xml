@@ -2,4 +2,8 @@
     <string name="app_name">linkeasyTest</string>
     <string name="add_device">添加设备</string>
     <string name="start_preview">开启预览</string>
+    <string name="device_share">设备分享(主用户)</string>
+    <string name="device_share2">设备分享(从用户)</string>
+    <string name="device_alarm">设备告警</string>
+    <string name="device_alarm2">设备告警(历史)</string>
 </resources>

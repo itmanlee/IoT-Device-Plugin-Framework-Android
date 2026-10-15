@@ -6,7 +6,9 @@ import com.git.linkeasyconfig.config.MyConfig
 import com.git.linkeasyconfig.config.ServiceUrl
 import com.git.linkeasyfeatureadddevice.AddDeviceApi
 import com.git.linkeasyfeatureadddevice.AddDeviceHostCallback
+import com.git.linkeasyfeaturealarm.AlarmApi
 import com.git.linkeasyfeaturepreview.PreviewApi
+import com.git.linkeasyfeaturesharedevice.ShareDeviceApi
 import com.git.linkeasyrtm.RtmModule
 import com.git.linkeasysdk.LinkEasySdk
 
@@ -36,9 +38,13 @@ class LinkEasyApp : Application() {
         )
         //初始化预览模块
         PreviewApi.init(applicationContext)
+        ShareDeviceApi.init(applicationContext)
+        AlarmApi.init(applicationContext)
         // 宿主侧添加相关回调接口
         AddDeviceApi.setHostCallback(callback)
         PreviewApi.setHostCallback(callback)
         RtmModule.setHostCallback(callback)
+        ShareDeviceApi.setHostCallback(callback)
+        AlarmApi.setHostCallback(callback)
     }
 }

@@ -62,4 +62,6 @@ dependencies {
     implementation libs.linkeasy.sdk
     implementation libs.linkeasy.featureAdddevice
     implementation libs.linkeasy.featurePreview
+    implementation libs.linkeasy.featureSharedevice
+    implementation libs.linkeasy.featureAlarm
 }
