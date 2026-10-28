@@ -8,7 +8,9 @@ import com.git.linkeasyfeatureadddevice.AddDeviceApi
 import com.git.linkeasyfeatureadddevice.AddDeviceHostCallback
 import com.git.linkeasyfeaturealarm.AlarmApi
 import com.git.linkeasyfeaturepreview.PreviewApi
+import com.git.linkeasyfeatureset.SetApi
 import com.git.linkeasyfeaturesharedevice.ShareDeviceApi
+import com.git.linkeasyrtc.RtcModule
 import com.git.linkeasyrtm.RtmModule
 import com.git.linkeasysdk.LinkEasySdk
 
@@ -20,11 +22,6 @@ class LinkEasyApp : Application() {
     val callback = SdkCallBack()
     override fun onCreate() {
         super.onCreate()
-        // 初始化 SDK：应用标识、服务地址、主题色等由宿主传入。
-        // XML 主题：宿主需在 themes.xml 定义 Theme.Mytheme（并让 Theme.LinkeasyAar 继承它），
-        // 通过 attr primaryThemeColor、logo 覆盖库默认主色和 Logo；Manifest 的 application/activity
-        // 使用 @style/Theme.LinkeasyAar。不写这些 attr 时仍用库内默认。
-        // MyConfig.primaryThemeColor 是代码侧主色，可与 XML 的 primaryThemeColor 一并配置。
         LinkEasySdk.initSdk(
             applicationContext,
             MyConfig(
@@ -36,15 +33,25 @@ class LinkEasyApp : Application() {
                 appRtcId = "e5948fec52584be4a29543a66c458bd2"
             )
         )
-        //初始化预览模块
-        PreviewApi.init(applicationContext)
         ShareDeviceApi.init(applicationContext)
+        PreviewApi.init(applicationContext)
         AlarmApi.init(applicationContext)
-        // 宿主侧添加相关回调接口
+        SetApi.init(applicationContext)
         AddDeviceApi.setHostCallback(callback)
         PreviewApi.setHostCallback(callback)
         RtmModule.setHostCallback(callback)
         ShareDeviceApi.setHostCallback(callback)
         AlarmApi.setHostCallback(callback)
+        SetApi.setHostCallback(callback)
+        loginRtcRtm()
     }
+    /**
+     * 用于刷新RTC/RTM的token，建议用户登录后调用
+     */
+    fun loginRtcRtm() {
+        RtcModule.startMonitor()
+        RtcModule.getNewToken()
+        RtmModule.getNewToken()
+    }
+
 }
