@@ -8,8 +8,16 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
 composeBom = "2024.09.00"
-linkeasySdk="1.0.4"
+linkeasySdk="1.0.5"
+linkeasyAdddevice="1.0.5"
+linkeasyPreview="1.0.4"
+linkeasySharedevice="1.0.4"
+linkeasyAlarm="1.0.4"
+linkeasySet="1.0.4"
 gsonVersion="2.8.9"
+constraintlayoutComposeVersion = "1.0.1"
+constraintlayoutVersion = "2.1.4"
+scanVersion = "2.1.0.300"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -26,13 +34,15 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 linkeasy-sdk={group = "io.enz.linkeasy", name = "linkeasysdk", version.ref = "linkeasySdk"}
-linkeasy-featureAdddevice={group = "io.enz.linkeasy", name = "linkeasyFeatureAdddevice", version.ref = "linkeasySdk"}
-linkeasy-featurePreview={group = "io.enz.linkeasy", name = "linkeasyFeaturePreview", version.ref = "linkeasySdk"}
-linkeasy-featureSharedevice={group = "io.enz.linkeasy", name = "linkeasyFeatureSharedevice", version.ref = "linkeasySdk"}
-linkeasy-featureAlarm={group = "io.enz.linkeasy", name = "linkeasyFeatureAlarm", version.ref = "linkeasySdk"}
-linkeasy-featureSet={group = "io.enz.linkeasy", name = "linkeasyFeatureSet", version.ref = "linkeasySdk"}
+linkeasy-featureAdddevice={group = "io.enz.linkeasy", name = "linkeasyFeatureAdddevice", version.ref = "linkeasyAdddevice"}
+linkeasy-featurePreview={group = "io.enz.linkeasy", name = "linkeasyFeaturePreview", version.ref = "linkeasyPreview"}
+linkeasy-featureSharedevice={group = "io.enz.linkeasy", name = "linkeasyFeatureSharedevice", version.ref = "linkeasySharedevice"}
+linkeasy-featureAlarm={group = "io.enz.linkeasy", name = "linkeasyFeatureAlarm", version.ref = "linkeasyAlarm"}
+linkeasy-featureSet={group = "io.enz.linkeasy", name = "linkeasyFeatureSet", version.ref = "linkeasySet"}
 gson-goolge={ group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
-
+constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayoutComposeVersion" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayoutVersion" }
+scan = { group = "com.huawei.hms", name = "scanplus", version.ref = "scanVersion" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

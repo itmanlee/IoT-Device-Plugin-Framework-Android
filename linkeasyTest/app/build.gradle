@@ -59,6 +59,9 @@ dependencies {
     debugImplementation libs.androidx.ui.tooling
     debugImplementation libs.androidx.ui.test.manifest
     implementation libs.gson.goolge
+    implementation libs.constraintlayout.compose
+    implementation libs.constraintlayout
+    implementation libs.scan
     implementation libs.linkeasy.sdk
     implementation libs.linkeasy.featureAdddevice
     implementation libs.linkeasy.featurePreview

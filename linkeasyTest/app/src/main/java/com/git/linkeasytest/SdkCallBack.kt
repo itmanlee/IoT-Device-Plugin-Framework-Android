@@ -23,10 +23,23 @@ class SdkCallBack() : AddDeviceHostCallback, RtmHostCallback, PreviewHostCallbac
 
     override fun addDeviceSuccess(sn: String) {
         Log.i("AddDevice", "host received added sn=$sn")
+        Log.i("AddDevice", "host received addDeviceSuccess sn=$sn")
+    }
+
+    override fun addDeviceFail(sn: String) {
+        Log.i("AddDevice", "host received addDeviceFail sn=$sn")
     }
 
     override fun addDeviceSuccessForShare() {
         Log.i("AddDevice", "addDeviceSuccessForShare")
+    }
+
+    override fun addDeviceFailForShare() {
+        Log.i("AddDevice", "addDeviceFailForShare")
+    }
+
+    override fun activationScreen(type: Int) {
+
     }
 
     override fun getDeviceInfo(sn: String): DeviceInfo? {
