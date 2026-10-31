@@ -8,16 +8,19 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
 composeBom = "2024.09.00"
-linkeasySdk="1.0.5"
-linkeasyAdddevice="1.0.5"
-linkeasyPreview="1.0.4"
+linkeasySdk="1.0.6"
+linkeasyAdddevice="1.0.6"
+linkeasyPreview="1.0.6"
 linkeasySharedevice="1.0.4"
 linkeasyAlarm="1.0.4"
-linkeasySet="1.0.4"
+linkeasySet="1.0.6"
+linkeasyDeviceAddress="1.0.6"
+linkeasyMisc="1.0.6"
 gsonVersion="2.8.9"
 constraintlayoutComposeVersion = "1.0.1"
 constraintlayoutVersion = "2.1.4"
 scanVersion = "2.1.0.300"
+coilVersion = "2.4.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -39,6 +42,9 @@ linkeasy-featurePreview={group = "io.enz.linkeasy", name = "linkeasyFeaturePrevi
 linkeasy-featureSharedevice={group = "io.enz.linkeasy", name = "linkeasyFeatureSharedevice", version.ref = "linkeasySharedevice"}
 linkeasy-featureAlarm={group = "io.enz.linkeasy", name = "linkeasyFeatureAlarm", version.ref = "linkeasyAlarm"}
 linkeasy-featureSet={group = "io.enz.linkeasy", name = "linkeasyFeatureSet", version.ref = "linkeasySet"}
+linkeasy-featureDeviceAddress={group = "io.enz.linkeasy", name = "linkeasyFeatureDeviceAddress", version.ref = "linkeasySet"}
+linkeasy-featureMisc={group = "io.enz.linkeasy", name = "linkeasyFeatureMisc", version.ref = "linkeasySet"}
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion" }
 gson-goolge={ group = "com.google.code.gson", name = "gson", version.ref = "gsonVersion" }
 constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayoutComposeVersion" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayoutVersion" }

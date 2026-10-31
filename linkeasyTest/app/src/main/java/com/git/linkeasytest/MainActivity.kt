@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothDevice
 import android.os.Bundle
 import android.os.Message
 import android.text.TextUtils
-
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -40,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -51,8 +51,10 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.Lifecycle
+import coil.compose.AsyncImage
 import com.git.linkeasybase.flow.FlowBus
 import com.git.linkeasycommon.bean.DeviceInfo
+import com.git.linkeasycommon.bean.SiteCountry
 import com.git.linkeasycommon.constantRes.IntegerConstantResource
 import com.git.linkeasycommon.hostBean.HostAlarmInfo
 import com.git.linkeasycommon.hostBean.HostPreviewInfo
@@ -66,6 +68,7 @@ import com.git.linkeasyfeatureadddevice.AddDeviceContract
 import com.git.linkeasyfeatureadddevice.controller.BluetoothController
 import com.git.linkeasyfeaturealarm.AlarmApi
 import com.git.linkeasyfeaturealarm.AlarmContract
+import com.git.linkeasyfeaturemisc.MiscApi
 import com.git.linkeasyfeaturepreview.PreviewApi
 import com.git.linkeasyfeaturepreview.PreviewContract
 import com.git.linkeasyfeatureset.SetApi
@@ -73,7 +76,6 @@ import com.git.linkeasyfeatureset.SetContract
 import com.git.linkeasyfeaturesharedevice.ShareDeviceApi
 import com.git.linkeasyfeaturesharedevice.ShareDeviceContract
 import com.git.linkeasysdk.LinkEasySdk
-import com.git.linkeasytest.ui.DeviceListController
 import com.git.linkeasytest.ui.theme.LinkeasyTestTheme
 import com.git.linkeasyuibase.util.ToastUtils
 import com.git.linkeasyuibase.view.ShareTitleNoCallBackHasDownLine
@@ -92,6 +94,7 @@ class MainActivity : ComponentActivity(), FlowBus.acceptMessage {
     companion object {
         const val uid = 15772
         const val token = "595d93773dac13f1d38c8c8e3f8e0752"
+        const val openId = "f08af48155e43442f1d52b0eb4105bec"
         const val TAG = "MainActivity"
     }
 
@@ -124,6 +127,7 @@ class MainActivity : ComponentActivity(), FlowBus.acceptMessage {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        LinkEasyApp.app.callback.setActivity(this)
         setContent {
             LinkeasyTestTheme {
                 val deviceList = DeviceListController.deviceList.collectAsState()
@@ -136,18 +140,14 @@ class MainActivity : ComponentActivity(), FlowBus.acceptMessage {
                     scope.launch {
                         val list = LinkEasySdk.requestDeviceList(uid, token)
                         DeviceListController.updateDeviceList(list)
+                        LinkEasySdk.getSiteConf("CN")?.let {
+                            initAws3(it)
+                        }
+
                     }
                     onDispose { FlowBus.unRegister(this@MainActivity, TAG) }
                 }
-
-                DisposableEffect(Unit) {
-                    scope.launch {
-                        val list = LinkEasySdk.requestDeviceList(uid, token)
-                        DeviceListController.updateDeviceList(list)
-                    }
-                    onDispose { }
-                }
-
+                val currentContext = LocalContext.current
                 Column(modifier = Modifier
                     .padding(top = 44.dp)
                     .fillMaxWidth()
@@ -198,6 +198,16 @@ class MainActivity : ComponentActivity(), FlowBus.acceptMessage {
                                         "离线"
                                     }
                                 })")
+                                AsyncImage(model = LinkEasySdk.getDeviceCover(
+                                    item.sn, currentContext),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .width(80.dp)
+                                        .height(60.dp)
+                                        .clip(RoundedCornerShape(8.dp)),
+                                    contentScale = ContentScale.Crop,
+                                    placeholder = painterResource(id = R.mipmap.img_device_item_default),
+                                    error = painterResource(id = R.mipmap.img_device_item_default))
                                 FlowRow(modifier = Modifier
                                     .padding(top = 8.dp)
                                     .fillMaxWidth()
@@ -207,7 +217,7 @@ class MainActivity : ComponentActivity(), FlowBus.acceptMessage {
                                 ) {
                                     Text(stringResource(R.string.start_preview), modifier = Modifier.click {
                                         PreviewApi.start(previewDeviceLauncher,
-                                            HostPreviewInfo(uid, token, item.sn))
+                                            HostPreviewInfo(uid, token, openId, item.sn))
                                     })
                                     Text(stringResource(R.string.device_share), modifier = Modifier.click {
                                         ShareDeviceApi.start(shareDeviceLauncher,
@@ -245,6 +255,20 @@ class MainActivity : ComponentActivity(), FlowBus.acceptMessage {
                 }
             }
         }
+    }
+
+    fun gotoChannelSet(sn: String, channel: Int, fromType: Int) {
+        SetApi.start(setContractLauncher,
+            HostSetInfo(uid, token, sn, channel, fromType))
+    }
+
+    /**
+     * 初始化aws3存储桶用
+     * 设置模块osd设置、自定义语音会用到
+     *  SetApi.init后调用
+     */
+    fun initAws3(mSiteCountry: SiteCountry) {
+        SetApi.initAWS3(mSiteCountry.siteInfo)
     }
 
     @Composable
@@ -441,5 +465,9 @@ class MainActivity : ComponentActivity(), FlowBus.acceptMessage {
             return
         }
         super.onBackPressed()
+    }
+
+    fun gotoEditDeviceName(sn: String, did: Int) {
+        MiscApi.start(this, uid, token, sn, did)
     }
 }

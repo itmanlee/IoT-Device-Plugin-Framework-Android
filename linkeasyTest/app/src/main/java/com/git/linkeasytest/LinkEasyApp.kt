@@ -1,12 +1,16 @@
 package com.git.linkeasytest
 
+import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import com.git.linkeasyconfig.config.MyConfig
 import com.git.linkeasyconfig.config.ServiceUrl
 import com.git.linkeasyfeatureadddevice.AddDeviceApi
 import com.git.linkeasyfeatureadddevice.AddDeviceHostCallback
 import com.git.linkeasyfeaturealarm.AlarmApi
+import com.git.linkeasyfeaturedeviceaddress.DeviceAddressApi
+import com.git.linkeasyfeaturemisc.MiscApi
 import com.git.linkeasyfeaturepreview.PreviewApi
 import com.git.linkeasyfeatureset.SetApi
 import com.git.linkeasyfeaturesharedevice.ShareDeviceApi
@@ -20,29 +24,45 @@ import com.git.linkeasysdk.LinkEasySdk
  */
 class LinkEasyApp : Application() {
     val callback = SdkCallBack()
+
+    companion object {
+        lateinit var app: LinkEasyApp
+
+        @JvmStatic
+        fun getInstance(): LinkEasyApp {
+            return app
+        }
+
+    }
+
     override fun onCreate() {
         super.onCreate()
+        app = this
         LinkEasySdk.initSdk(
             applicationContext,
             MyConfig(
                 appName = "linkeasy",
                 applicationId = packageName,
                 appVendor = "LINKEASY",
-                url = ServiceUrl(baseUrl = "http://ai-cn.yeelinkvision.com"),
+                url = ServiceUrl(baseUrl = "http://ai-cn.yeelinkvision.com", cloudUrl = "http://oss-h5.yeelinkvision.com"),
                 primaryThemeColor = 0xFFFF0000.toInt(),
                 appRtcId = "e5948fec52584be4a29543a66c458bd2"
             )
         )
         ShareDeviceApi.init(applicationContext)
+        AddDeviceApi.init(applicationContext)
         PreviewApi.init(applicationContext)
         AlarmApi.init(applicationContext)
         SetApi.init(applicationContext)
+        DeviceAddressApi.init(applicationContext)
+        MiscApi.init(applicationContext)
         AddDeviceApi.setHostCallback(callback)
         PreviewApi.setHostCallback(callback)
         RtmModule.setHostCallback(callback)
         ShareDeviceApi.setHostCallback(callback)
         AlarmApi.setHostCallback(callback)
         SetApi.setHostCallback(callback)
+        MiscApi.setHostCallback(callback)
         loginRtcRtm()
     }
     /**

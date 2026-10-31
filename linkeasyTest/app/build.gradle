@@ -62,10 +62,13 @@ dependencies {
     implementation libs.constraintlayout.compose
     implementation libs.constraintlayout
     implementation libs.scan
+    implementation libs.coil
     implementation libs.linkeasy.sdk
     implementation libs.linkeasy.featureAdddevice
     implementation libs.linkeasy.featurePreview
     implementation libs.linkeasy.featureSharedevice
     implementation libs.linkeasy.featureAlarm
     implementation libs.linkeasy.featureSet
+    implementation libs.linkeasy.featureDeviceAddress
+    implementation libs.linkeasy.featureMisc
 }

@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LinkeasyAar"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="7bd60cb612d4c0520568c2efd624f68e" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

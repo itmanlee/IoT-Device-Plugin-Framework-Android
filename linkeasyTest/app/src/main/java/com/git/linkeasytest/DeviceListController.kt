@@ -1,4 +1,4 @@
-package com.git.linkeasytest.ui
+package com.git.linkeasytest
 
 import com.git.linkeasycommon.bean.DeviceInfo
 import kotlinx.coroutines.flow.MutableStateFlow

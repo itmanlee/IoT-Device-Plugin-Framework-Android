@@ -1,29 +1,39 @@
 package com.git.linkeasytest
 
+import android.text.TextUtils
 import android.util.Log
+import com.git.linkeasybase.flow.FlowBus
 import com.git.linkeasycommon.bean.BatteryManagement
 import com.git.linkeasycommon.bean.DeviceInfo
 import com.git.linkeasycommon.bean.Extend4g
 import com.git.linkeasycommon.utils.JsonConfig
 import com.git.linkeasyfeatureadddevice.AddDeviceHostCallback
 import com.git.linkeasyfeaturealarm.AlarmHostCallBack
+import com.git.linkeasyfeaturemisc.MiscHostCallback
 import com.git.linkeasyfeaturepreview.PreviewHostCallback
 import com.git.linkeasyfeatureset.SetHostCallback
 import com.git.linkeasyfeaturesharedevice.ShareDeviceHostCallBack
 import com.git.linkeasyrtm.RtmHostCallback
-import com.git.linkeasytest.ui.DeviceListController
 import com.google.gson.Gson
 
 class SdkCallBack() : AddDeviceHostCallback, RtmHostCallback, PreviewHostCallback, ShareDeviceHostCallBack, AlarmHostCallBack,
-    SetHostCallback {
-
+    SetHostCallback, MiscHostCallback {
+    /**
+     * 暂时写死，后面需要确认该数据如何获取
+     */
+    val ossbatchList = listOf("03d2", "03ad", "33da")
     override fun isDeviceAlreadyAdded(sn: String): Boolean = false
 
     override fun isSerialNumberValid(sn: String): Boolean = true
+    private lateinit var activity: MainActivity
+    fun setActivity(activity: MainActivity) {
+        this.activity = activity
+    }
 
-    override fun addDeviceSuccess(sn: String) {
-        Log.i("AddDevice", "host received added sn=$sn")
-        Log.i("AddDevice", "host received addDeviceSuccess sn=$sn")
+    override fun addDeviceSuccess(sn: String, did: Int) {
+        if (::activity.isInitialized) {
+            activity.gotoEditDeviceName(sn, did)
+        }
     }
 
     override fun addDeviceFail(sn: String) {
@@ -57,7 +67,18 @@ class SdkCallBack() : AddDeviceHostCallback, RtmHostCallback, PreviewHostCallbac
     }
 
     override fun checkDeviceNickNameDuplicate(nickName: String): Boolean {
-        return false
+        return if (TextUtils.isEmpty(nickName)) {
+            false
+        } else {
+            val flag = DeviceListController.getDeviceList().firstOrNull {
+                it.aliasName == nickName
+            }
+            flag != null
+        }
+    }
+
+    override fun changeDeviceNickName() {
+//刷新设备列表
     }
 
     override fun updataDeviceName(sn: String, nickName: String) {
@@ -78,6 +99,20 @@ class SdkCallBack() : AddDeviceHostCallback, RtmHostCallback, PreviewHostCallbac
 
     override fun getDataFrontOrBackgroundDesk(): Boolean {
         return true
+    }
+
+    override fun getSite(): String {
+        return "cn"
+    }
+
+    override fun isSupportCloud(sn: String): Boolean {
+        return ossbatchList.contains(sn.substring(0, 4))
+    }
+
+    override fun gotoChannelSet(sn: String, channel: Int, fromType: Int) {
+        if (::activity.isInitialized) {
+            activity.gotoChannelSet(sn, channel, fromType)
+        }
     }
 
     override fun getDeviceList(): List<DeviceInfo>? {
